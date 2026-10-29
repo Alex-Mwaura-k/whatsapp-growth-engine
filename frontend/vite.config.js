@@ -20,7 +20,7 @@ export default defineConfig({
         short_name: 'GrowthApp',
         description: 'Expand your WhatsApp network securely.',
         theme_color: '#25D366',
-        background_color: '#f3f4f6',
+        background_color: '#25D366',
         display: 'standalone',
         orientation: 'portrait',
         scope: '/',
