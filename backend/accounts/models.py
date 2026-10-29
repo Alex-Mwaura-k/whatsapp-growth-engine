@@ -25,7 +25,9 @@ def normalize_phone_number(phone, default_country_code='254'):
 
 
 def get_profile_image_filepath(instance, filename):
-    ext = filename.split('.')[-1]
+    ext = filename.rsplit('.', 1)[-1].lower() if '.' in filename else ''
+    if ext not in ('jpg', 'jpeg', 'png', 'webp', 'gif'):
+        ext = 'jpg'
     filename = f"{uuid.uuid4()}.{ext}"
     return os.path.join('profile_pics/', filename)
 

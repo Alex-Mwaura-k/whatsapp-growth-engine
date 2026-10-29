@@ -7,30 +7,26 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      // SECURITY: Inject service worker into the build 
       injectRegister: 'auto',
       devOptions: {
         enabled: true 
       },
-      // SECURITY: Best practice to include workbox settings for offline security
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
-        // Prevents man-in-the-middle attacks by ensuring only trusted assets are cached
         sourcemap: false 
       },
       manifest: {
         name: 'Growth Engine',
         short_name: 'GrowthApp',
         description: 'Expand your WhatsApp network securely.',
-        theme_color: '#3b82f6', // Updated to match your blue theme
+        theme_color: '#25D366',
         background_color: '#f3f4f6',
         display: 'standalone',
-        orientation: 'portrait', // SECURITY: Prevents UI breaks on rotate
+        orientation: 'portrait',
         scope: '/',
         start_url: '/',
         icons: [
           {
-            // FIXED: Pointing exactly to your local files in /public
             src: 'pwa-192x192.png', 
             sizes: '192x192',
             type: 'image/png',
@@ -40,7 +36,7 @@ export default defineConfig({
             src: 'pwa-192x192.png',
             sizes: '192x192',
             type: 'image/png',
-            purpose: 'maskable' // Support for adaptive Android icons
+            purpose: 'maskable'
           },
           {
             src: 'pwa-512x512.png',
@@ -58,8 +54,6 @@ export default defineConfig({
       }
     })
   ],
-
-  // DEV SERVER PROXY: Seamlessly forwards all /api requests to Django backend on port 8000
   server: {
     proxy: {
       '/api': {
@@ -69,14 +63,12 @@ export default defineConfig({
       },
     },
   },
-
-  // SECURITY: Prevent source code leaking in production
   build: {
     sourcemap: false,
     minify: 'terser',
     terserOptions: {
       compress: {
-        drop_console: true, // Security: Removes console.logs in production
+        drop_console: true,
         drop_debugger: true
       }
     }

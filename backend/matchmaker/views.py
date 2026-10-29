@@ -1,4 +1,5 @@
 import json
+import logging
 import re
 from datetime import timedelta
 from decimal import Decimal
@@ -153,8 +154,9 @@ class JoinPoolView(APIView):
                     http_code = status.HTTP_400_BAD_REQUEST
                 return Response({"error": msg.strip()}, status=http_code)
             return Response({"error": err_str}, status=status.HTTP_400_BAD_REQUEST)
-        except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except Exception:
+            logging.getLogger('security.audit').exception("Unhandled error joining pool")
+            return Response({"error": "Something went wrong. Please try again."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class CurrentMatchView(generics.RetrieveAPIView):
@@ -312,8 +314,9 @@ class UserBatchesView(APIView):
                 })
 
             return Response(bundles, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except Exception:
+            logging.getLogger('security.audit').exception("Unhandled error listing bundles")
+            return Response({"error": "Something went wrong. Please try again."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class DownloadVCFView(generics.RetrieveAPIView):
@@ -379,8 +382,9 @@ class DownloadVCFView(generics.RetrieveAPIView):
                 return Response({"error": msg.strip()}, status=http_code)
 
             return Response({"error": err_str}, status=status.HTTP_400_BAD_REQUEST)
-        except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except Exception:
+            logging.getLogger('security.audit').exception("Unhandled error during VCF download")
+            return Response({"error": "Something went wrong. Please try again."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         if is_first_download:
             queue_req.status = 'completed'

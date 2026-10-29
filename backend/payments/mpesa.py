@@ -96,7 +96,7 @@ class MpesaClient:
         except requests.exceptions.RequestException as e:
             return {
                 "ResponseCode": "1",
-                "errorMessage": f"M-Pesa API Connection Error: {str(e)}"
+                "errorMessage": "M-Pesa API connection error. Please try again."
             }
 
     def stk_push_query(self, checkout_request_id):
@@ -141,5 +141,5 @@ class MpesaClient:
             return {
                 "ResponseCode": "1",
                 "ResultCode": "1",
-                "errorMessage": f"M-Pesa Query Connection Error: {str(e)}"
+                "errorMessage": "M-Pesa query connection error. Please try again."
             }
