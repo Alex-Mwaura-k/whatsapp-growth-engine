@@ -106,7 +106,7 @@ export default function LandingPage() {
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-700 text-sm font-black tracking-tight text-white sm:h-10 sm:w-10" aria-hidden="true">
               GE
             </span>
-            <span className="truncate text-sm font-black tracking-tight text-slate-950 sm:text-xl">Growth Engine</span>
+            <span className="truncate text-sm font-black tracking-tight text-slate-950 sm:text-xl"> WhatsApp Growth Engine</span>
           </Link>
 
           <div className="hidden items-center gap-7 md:flex">
