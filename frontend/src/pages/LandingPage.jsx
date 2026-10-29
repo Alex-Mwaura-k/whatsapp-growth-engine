@@ -168,7 +168,7 @@ export default function LandingPage() {
                   to="/register"
                   className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-blue-700 px-6 py-3 text-base font-extrabold text-white shadow-lg shadow-blue-700/15 transition-all hover:-translate-y-0.5 hover:bg-blue-800 hover:shadow-blue-700/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                 >
-                  Create your free account <ArrowRight size={18} aria-hidden="true" />
+                  Download Free Contacs <ArrowRight size={18} aria-hidden="true" />
                 </Link>
                 <a
                   href="#how-it-works"
