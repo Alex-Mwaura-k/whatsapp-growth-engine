@@ -11,7 +11,7 @@ function LegalPage({ title, children }) {
   }, []);
 
   return (
-    <main className="min-h-screen bg-gray-50 px-4 py-8 font-sans dark:bg-slate-950">
+    <main className="min-h-screen bg-gray-50 px-4 py-4 font-sans dark:bg-slate-950">
       <SEO 
         title={title} 
         description={`Read the official ${title} for Growth Engine.`} 
