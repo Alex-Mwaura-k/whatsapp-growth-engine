@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-const effectiveDate = import.meta.env.VITE_EFFECTIVE_DATE || process.env.REACT_APP_EFFECTIVE_DATE;
-const privacyEmail = import.meta.env.VITE_PRIVACY_EMAIL || process.env.REACT_APP_PRIVACY_EMAIL;
+import SEO from '../components/SEO';
+
+const effectiveDate = import.meta.env.VITE_EFFECTIVE_DATE;
+const privacyEmail = import.meta.env.VITE_PRIVACY_EMAIL || import.meta.env.VITE_SUPPORT_EMAIL;
 
 function LegalPage({ title, children }) {
   useEffect(() => {
@@ -10,6 +12,10 @@ function LegalPage({ title, children }) {
 
   return (
     <main className="min-h-screen bg-gray-50 px-4 py-8 font-sans dark:bg-slate-950">
+      <SEO 
+        title={title} 
+        description={`Read the official ${title} for Growth Engine.`} 
+      />
       <article className="mx-auto max-w-[1300px] rounded-2xl border border-gray-100 bg-white p-6 shadow-xl dark:border-slate-800 dark:bg-slate-900 sm:p-10">
         <div className="flex justify-between text-sm font-bold text-blue-600">
           <Link to="/" className="hover:underline">
