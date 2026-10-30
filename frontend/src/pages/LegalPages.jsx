@@ -1,15 +1,24 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
-const effectiveDate = '23 October 2026';
-const privacyEmail = 'ra.technologies.co.ke@gmail.com';
+const effectiveDate = import.meta.env.VITE_EFFECTIVE_DATE || process.env.REACT_APP_EFFECTIVE_DATE || 'Update Date in .env';
+const privacyEmail = import.meta.env.VITE_PRIVACY_EMAIL || process.env.REACT_APP_PRIVACY_EMAIL || 'update-email-in@env.com';
 
 function LegalPage({ title, children }) {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <main className="min-h-screen bg-gray-50 px-4 py-10 font-sans dark:bg-slate-950">
-      <article className="mx-auto max-w-3xl rounded-2xl border border-gray-100 bg-white p-6 shadow-xl dark:border-slate-800 dark:bg-slate-900 sm:p-10">
-        <Link to="/register" className="text-sm font-bold text-blue-600 hover:underline">
-          Back to registration
-        </Link>
+    <main className="min-h-screen bg-gray-50 px-4 py-8 font-sans dark:bg-slate-950">
+      <article className="mx-auto max-w-[1300px] rounded-2xl border border-gray-100 bg-white p-6 shadow-xl dark:border-slate-800 dark:bg-slate-900 sm:p-10">
+        <div className="flex justify-between text-sm font-bold text-blue-600">
+          <Link to="/" className="hover:underline">
+            Home page
+          </Link>
+          <Link to="/register" className="hover:underline">
+            Registration Page
+          </Link>
+        </div>
         <header className="mb-8 mt-5 border-b border-gray-100 pb-6 dark:border-slate-800">
           <h1 className="text-3xl font-black text-gray-900 dark:text-white">{title}</h1>
           <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
@@ -19,7 +28,7 @@ function LegalPage({ title, children }) {
         <div className="space-y-7 text-sm leading-7 text-gray-700 dark:text-gray-300">
           {children}
         </div>
-        <footer className="mt-10 border-t border-gray-100 pt-5 text-sm text-gray-500 dark:border-slate-800 dark:text-gray-400">
+        <footer className="mt-10 border-t border-gray-100 pt-5 text-center text-sm text-gray-500 dark:border-slate-800 dark:text-gray-400">
           Questions or privacy requests? Contact{' '}
           <a className="font-bold text-blue-600 hover:underline" href={`mailto:${privacyEmail}`}>
             {privacyEmail}
@@ -62,7 +71,7 @@ export function TermsPage() {
         <p>
           Joining a pool is an affirmative request to be matched with other participating members.
           To make that exchange work, your submitted profile information and contact details may be
-          included in another matched member’s contact file when that member unlocks the batch.
+          included in another matched member's contact file when that member unlocks the batch.
           Likewise, unlocking a batch gives you the contact details that participating members
           chose to make available through the service. Review the Privacy Policy before joining.
           Do not join or unlock a batch unless you understand and accept this reciprocal contact
@@ -84,7 +93,7 @@ export function TermsPage() {
         <p>
           Use contact details lawfully, respectfully, and for legitimate networking. You must
           obtain any permission required before adding a contact to marketing lists or messaging
-          them. Do not harass, threaten, impersonate, scrape, resell, or misuse members’ information;
+          them. Do not harass, threaten, impersonate, scrape, resell, or misuse members' information;
           do not use the service for unlawful discrimination, fraud, spam, or unlawful marketing.
           Respect applicable privacy and communications laws and the rules of any messaging
           platform you use.
@@ -103,13 +112,13 @@ export function TermsPage() {
 
       <Section title="6. Tokens, prices, and payments">
         <p>
-          The price, available token discount, and amount due are shown before checkout. A batch’s
+          The price, available token discount, and amount due are shown before checkout. A batch's
           price is determined by the platform phase recorded when that batch becomes ready.
           Referral tokens are an in-app discount balance, not cash, and cannot be transferred or
           redeemed except where we expressly state otherwise. Payment requests are processed
           through M-Pesa/Daraja. Do not repeat a payment while its status is uncertain; check the
           transaction status and contact us with the transaction reference. Any refund or payment
-          dispute will be handled under applicable law and the relevant payment provider’s rules.
+          dispute will be handled under applicable law and the relevant payment provider's rules.
         </p>
       </Section>
 
@@ -135,7 +144,7 @@ export function TermsPage() {
       <Section title="9. Disclaimers and limits">
         <p>
           To the extent permitted by applicable law, the service is provided as available, and we
-          are not responsible for a member’s independent conduct, the accuracy of user-submitted
+          are not responsible for a member's independent conduct, the accuracy of user-submitted
           profiles, network or payment-provider outages, or indirect losses outside our reasonable
           control. Nothing in these terms excludes liability for fraud, wilful misconduct, or any
           liability or consumer right that the law does not allow us to exclude or limit. This

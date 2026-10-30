@@ -1,5 +1,3 @@
-// The base ESLint no-unused-vars rule does not count JSX member expressions as usage.
-// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import {
   ArrowDown,
@@ -15,6 +13,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 const steps = [
   {
@@ -90,6 +89,12 @@ function SectionHeading({ eyebrow, title, description }) {
 export default function LandingPage() {
   return (
     <div className="min-h-screen overflow-hidden bg-white font-sans text-slate-900 selection:bg-blue-100 selection:text-blue-950">
+      <SEO 
+        title="WhatsApp" 
+        description="Grow your WhatsApp network with meaningful connections. Discover and exchange contacts with people who choose to join the same networking pool."
+        url="https://whatsapp-growth-engine.onrender.com"
+      />
+
       <a
         href="#main-content"
         className="sr-only z-50 rounded-lg bg-white px-4 py-3 font-bold text-blue-700 shadow-lg focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
@@ -99,7 +104,7 @@ export default function LandingPage() {
 
       <header className="fixed inset-x-0 top-0 z-50 border-b border-slate-100 bg-white/95 shadow-sm shadow-slate-900/5 backdrop-blur-sm">
         <nav
-          className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 sm:gap-4 sm:px-8 sm:py-4"
+          className="mx-auto flex max-w-[1300px] items-center justify-between gap-2 px-4 py-3 sm:gap-4 sm:px-8 sm:py-4"
           aria-label="Main navigation"
         >
           <Link to="/" className="flex min-w-0 shrink items-center gap-2 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600 sm:gap-2.5">
@@ -144,7 +149,7 @@ export default function LandingPage() {
       <main id="main-content">
         <section className="relative isolate overflow-hidden bg-gradient-to-b from-blue-50/80 via-white to-white">
           <div className="pointer-events-none absolute -right-40 -top-36 -z-10 h-[30rem] w-[30rem] rounded-full bg-blue-100/70 blur-3xl" aria-hidden="true" />
-          <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 py-16 sm:px-8 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:py-24">
+          <div className="mx-auto grid max-w-[1300px] items-center gap-12 px-5 py-16 sm:px-8 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:py-24">
             
             <motion.div 
               initial="hidden" 
@@ -168,7 +173,7 @@ export default function LandingPage() {
                   to="/register"
                   className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-blue-700 px-6 py-3 text-base font-extrabold text-white shadow-lg shadow-blue-700/15 transition-all hover:-translate-y-0.5 hover:bg-blue-800 hover:shadow-blue-700/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                 >
-                  Download Free Contacs <ArrowRight size={18} aria-hidden="true" />
+                  Download Free Contacts <ArrowRight size={18} aria-hidden="true" />
                 </Link>
                 <a
                   href="#how-it-works"
@@ -254,7 +259,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="how-it-works" className="scroll-mt-24 px-5 py-20 sm:px-8 sm:py-24">
+        <section id="how-it-works" className="scroll-mt-20 px-5 py-20 sm:px-8 sm:py-24">
           <SectionHeading
             eyebrow="Simple by design"
             title="From profile to introductions"
@@ -265,7 +270,7 @@ export default function LandingPage() {
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
             variants={staggerContainer}
-            className="mx-auto grid max-w-6xl gap-5 md:grid-cols-3"
+            className="mx-auto grid max-w-[1300px] gap-5 md:grid-cols-3"
           >
             {steps.map(({ number, title, description, Icon }) => (
               <motion.li variants={fadeUp} key={number} className="relative rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
@@ -282,8 +287,8 @@ export default function LandingPage() {
           </motion.ol>
         </section>
 
-        <section id="why-growth-engine" className="scroll-mt-24 bg-slate-50 px-5 py-20 sm:px-8 sm:py-24">
-          <div className="mx-auto max-w-6xl">
+        <section id="why-growth-engine" className="scroll-mt-20 bg-slate-50 px-5 py-20 sm:px-8 sm:py-24">
+          <div className="mx-auto max-w-[1300px]">
             <SectionHeading
               eyebrow="Built around your choices"
               title="A clearer, more considered way to connect"
@@ -321,7 +326,7 @@ export default function LandingPage() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="mx-auto grid max-w-6xl items-center gap-10 rounded-3xl bg-slate-950 px-6 py-10 text-white shadow-2xl sm:px-10 sm:py-12 lg:grid-cols-[1fr_auto] lg:gap-14"
+            className="mx-auto grid max-w-[1300px] items-center gap-10 rounded-3xl bg-slate-950 px-6 py-10 text-white shadow-2xl sm:px-10 sm:py-12 lg:grid-cols-[1fr_auto] lg:gap-14"
           >
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-blue-300">Your network, your call</p>
@@ -339,8 +344,8 @@ export default function LandingPage() {
           </motion.div>
         </section>
 
-        <section id="faq" className="scroll-mt-24 bg-blue-50/60 px-5 py-20 sm:px-8 sm:py-24">
-          <div className="mx-auto max-w-3xl">
+        <section id="faq" className="scroll-mt-20 bg-blue-50/60 px-5 py-20 sm:px-8 sm:py-24">
+          <div className="mx-auto max-w-[1300px]">
             <SectionHeading
               eyebrow="Good to know"
               title="Frequently asked questions"
@@ -362,7 +367,7 @@ export default function LandingPage() {
       </main>
 
       <footer className="border-t border-slate-200 bg-white px-5 py-10 sm:px-8">
-        <div className="mx-auto flex max-w-7xl flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
+        <div className="mx-auto flex max-w-[1300px] flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
           <div className="max-w-sm">
             <Link to="/" className="inline-flex items-center gap-2.5 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600">
               <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-700 text-xs font-black text-white" aria-hidden="true">GE</span>

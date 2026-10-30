@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import AppLayout from './components/AppLayout';
+import ScrollToTop from './components/ScrollToTop';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Matches from './pages/Matches';
@@ -23,6 +24,7 @@ function App() {
     <AuthProvider>
       <div className="min-h-screen bg-white">
         <BrowserRouter>
+          <ScrollToTop />
           <Routes>
             <Route 
               path="/" 
@@ -32,7 +34,6 @@ function App() {
                 <LandingPage />
               } 
             />
-
             <Route path="/login" element={<PublicOnlyRoute><Login /></PublicOnlyRoute>} />
             <Route path="/register" element={<PublicOnlyRoute><Register /></PublicOnlyRoute>} />
             
