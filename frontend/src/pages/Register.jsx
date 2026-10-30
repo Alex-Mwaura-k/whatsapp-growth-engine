@@ -186,9 +186,12 @@ export default function Register() {
 
         <form onSubmit={handleRegister} className="space-y-4">
           <div>
-            <label className="block text-[10px] font-black text-gray-400 uppercase mb-1 ml-1 text-left">WhatsApp Name</label>
+            <label htmlFor="whatsapp_name" className="block text-[10px] font-black text-gray-400 uppercase mb-1 ml-1 text-left">WhatsApp Name</label>
             <input
               type="text"
+              id="whatsapp_name"
+              name="whatsapp_name"
+              autoComplete="name"
               className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-600 outline-none transition-all font-bold bg-gray-50/50"
               value={formData.whatsapp_name}
               onChange={(e) => setFormData({...formData, whatsapp_name: e.target.value})}
@@ -197,7 +200,7 @@ export default function Register() {
           </div>
 
           <div className="phone-container relative z-20">
-            <label className="block text-[10px] font-black text-gray-400 uppercase mb-1 ml-1 text-left">Phone Number</label>
+            <label htmlFor="local_number" className="block text-[10px] font-black text-gray-400 uppercase mb-1 ml-1 text-left">Phone Number</label>
             
             <div className="flex items-center w-full border border-gray-200 rounded-xl bg-gray-50/50 focus-within:ring-2 focus-within:ring-blue-600 transition-all h-[44px]">
               
@@ -209,6 +212,11 @@ export default function Register() {
                   country={countryISO}
                   enableSearch={true}
                   value={formData.country_code}
+                  inputProps={{
+                    name: 'country_code',
+                    id: 'country_code',
+                    autoComplete: 'tel-country-code'
+                  }}
                   onChange={(val, countryData) => {
                     countrySelectedByUser.current = true;
                     setFormData((prev) => ({ ...prev, country_code: val }));
@@ -225,6 +233,9 @@ export default function Register() {
               <div className="flex-1 relative h-full">
                 <input
                   type="tel"
+                  id="local_number"
+                  name="local_number"
+                  autoComplete="tel-national"
                   placeholder="07../ 01../ 7.. etc"
                   className="w-full h-full px-4 py-2.5 text-sm bg-transparent border-none outline-none font-bold text-gray-800 placeholder-gray-400 rounded-r-xl"
                   value={formData.local_number}
@@ -237,9 +248,11 @@ export default function Register() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-[10px] font-black text-gray-400 uppercase mb-1 ml-1 text-left">Password</label>
+              <label htmlFor="password" className="block text-[10px] font-black text-gray-400 uppercase mb-1 ml-1 text-left">Password</label>
               <input
                 type="password"
+                id="password"
+                name="password"
                 placeholder="••••••••"
                 autoComplete="new-password"
                 className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-600 outline-none transition-all font-bold bg-gray-50/50"
@@ -253,9 +266,11 @@ export default function Register() {
             </div>
             
             <div>
-              <label className="block text-[10px] font-black text-gray-400 uppercase mb-1 ml-1 text-left">Confirm</label>
+              <label htmlFor="confirmPassword" className="block text-[10px] font-black text-gray-400 uppercase mb-1 ml-1 text-left">Confirm</label>
               <input
                 type="password"
+                id="confirmPassword"
+                name="confirmPassword"
                 placeholder="••••••••"
                 autoComplete="new-password"
                 className={`w-full px-4 py-2.5 text-sm border rounded-xl focus:ring-2 outline-none transition-all font-bold bg-gray-50/50 ${
@@ -273,12 +288,13 @@ export default function Register() {
             </div>
           </div>
 
-          <div className="flex items-start gap-2 py-1">
+          <div className="flex items-center gap-2 py-1">
             <input
               type="checkbox"
               id="terms"
+              name="termsAccepted"
               required
-              className="mt-0.5 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
               checked={formData.termsAccepted}
               onChange={(e) => setFormData({...formData, termsAccepted: e.target.checked})}
             />

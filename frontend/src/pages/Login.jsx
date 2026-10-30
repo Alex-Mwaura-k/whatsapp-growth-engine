@@ -147,7 +147,9 @@ export default function Login() {
         <form onSubmit={handleLogin} className="space-y-4">
           
           <div className="phone-container relative z-20">
-            <label className="block text-[10px] font-black text-gray-400 uppercase mb-1 ml-1 text-left">Phone Number</label>
+            <label htmlFor="local_number" className="block text-[10px] font-black text-gray-400 uppercase mb-1 ml-1 text-left">
+              Phone Number
+            </label>
             <div className="flex items-center w-full border border-gray-200 rounded-xl bg-gray-50/50 focus-within:ring-2 focus-within:ring-blue-600 transition-all h-[44px]">
               
               <div className="w-[105px] sm:w-[115px] flex-shrink-0 border-r border-gray-200 h-full bg-transparent rounded-l-xl relative">
@@ -161,6 +163,11 @@ export default function Login() {
                     country={countryISO}
                     enableSearch={true}
                     value={formData.country_code}
+                    inputProps={{
+                      id: 'country_code',
+                      name: 'country_code',
+                      autoComplete: 'tel-country-code'
+                    }}
                     onChange={(val, countryData) => {
                       setFormData({ ...formData, country_code: val });
                       setCountryISO(countryData.countryCode);
@@ -175,6 +182,9 @@ export default function Login() {
               <div className="flex-1 relative h-full">
                 <input
                   type="tel"
+                  id="local_number"
+                  name="local_number"
+                  autoComplete="tel-national"
                   className="w-full h-full px-2 py-2.5 text-sm bg-transparent border-none outline-none font-bold text-gray-800 placeholder-gray-400 rounded-r-xl disabled:opacity-50"
                   value={formData.local_number}
                   onChange={(e) => setFormData({...formData, local_number: e.target.value})}
@@ -187,7 +197,9 @@ export default function Login() {
 
           <div>
             <div className="flex justify-between items-end mb-1 ml-1 pr-1">
-              <label className="block text-[10px] font-black text-gray-400 uppercase text-left">Password</label>
+              <label htmlFor="password" className="block text-[10px] font-black text-gray-400 uppercase text-left">
+                Password
+              </label>
               <Link to="/forgot-password" className="text-[10px] font-bold text-blue-600 hover:text-blue-800 hover:underline transition-colors">
                 Forgot password?
               </Link>
@@ -196,6 +208,8 @@ export default function Login() {
             <div className="relative flex items-center">
               <input
                 type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
                 placeholder="••••••••"
                 className="w-full pl-4 pr-12 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-600 outline-none transition-all font-bold bg-gray-50/50 select-none"
                 value={formData.password}
@@ -213,6 +227,7 @@ export default function Login() {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 p-1 text-gray-400 hover:text-gray-600 focus:outline-none transition-colors"
                 tabIndex="-1" 
+                aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? (
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
