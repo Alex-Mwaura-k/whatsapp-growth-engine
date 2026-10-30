@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-const effectiveDate = import.meta.env.VITE_EFFECTIVE_DATE || process.env.REACT_APP_EFFECTIVE_DATE || 'Update Date in .env';
-const privacyEmail = import.meta.env.VITE_PRIVACY_EMAIL || process.env.REACT_APP_PRIVACY_EMAIL || 'update-email-in@env.com';
+const effectiveDate = import.meta.env.VITE_EFFECTIVE_DATE || process.env.REACT_APP_EFFECTIVE_DATE;
+const privacyEmail = import.meta.env.VITE_PRIVACY_EMAIL || process.env.REACT_APP_PRIVACY_EMAIL;
 
 function LegalPage({ title, children }) {
   useEffect(() => {
