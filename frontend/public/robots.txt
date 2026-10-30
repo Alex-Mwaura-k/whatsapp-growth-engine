@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /$
+
+Disallow: /terms
+Disallow: /privacy
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password/
+Disallow: /dashboard
+Disallow: /profile
+Disallow: /download
+Disallow: /matches
+
+Sitemap: https://whatsapp-growth-engine.onrender.com/sitemap.xml

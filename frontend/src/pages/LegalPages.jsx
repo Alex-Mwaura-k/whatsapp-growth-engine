@@ -15,6 +15,7 @@ function LegalPage({ title, children }) {
       <SEO 
         title={title} 
         description={`Read the official ${title} for Growth Engine.`} 
+        noindex={true}
       />
       <article className="mx-auto max-w-[1300px] rounded-2xl border border-gray-100 bg-white p-6 shadow-xl dark:border-slate-800 dark:bg-slate-900 sm:p-10">
         <div className="flex justify-between text-sm font-bold text-blue-600">

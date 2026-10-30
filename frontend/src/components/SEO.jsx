@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 
-export default function SEO({ title, description, url, image }) {
+export default function SEO({ title, description, url, image, noindex = false }) {
   const baseUrl = import.meta.env.VITE_SITE_URL || 'https://whatsapp-growth-engine.onrender.com';
   
   const siteTitle = title ? `${title} Growth Engine` : 'Growth Engine - Meaningful WhatsApp Connections';
@@ -16,6 +16,12 @@ export default function SEO({ title, description, url, image }) {
       <title>{siteTitle}</title>
       <meta name="description" content={finalDescription} />
       <link rel="canonical" href={finalUrl} />
+
+      {noindex ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : (
+        <meta name="robots" content="index, follow" />
+      )}
 
       <meta property="og:type" content="website" />
       <meta property="og:url" content={finalUrl} />
