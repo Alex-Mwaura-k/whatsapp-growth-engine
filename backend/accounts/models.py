@@ -3,6 +3,7 @@ import re
 import uuid
 import secrets
 import string
+from io import BytesIO
 from decimal import Decimal
 from PIL import Image
 
@@ -10,7 +11,7 @@ from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.core.validators import RegexValidator
-from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 
 
 def normalize_phone_number(phone, default_country_code='254'):
@@ -175,18 +176,13 @@ class User(AbstractUser):
             self.referral_code = generate_unique_referral_code(User)
 
         # Handle old profile picture cleanup
-        profile_pic_changed = False
         if self.pk:
             try:
                 old_user = User.objects.get(pk=self.pk)
                 if old_user.profile_pic and old_user.profile_pic != self.profile_pic:
                     old_user.profile_pic.delete(save=False)
-                    profile_pic_changed = True
             except User.DoesNotExist:
                 pass
-        else:
-            if self.profile_pic:
-                profile_pic_changed = True
 
         if self.phone_number:
             self.phone_number = normalize_phone_number(self.phone_number)
@@ -200,22 +196,29 @@ class User(AbstractUser):
             self.category = general_cat
 
         self.is_profile_complete = self.check_profile_complete()
+        self._shrink_new_profile_pic()
 
         super().save(*args, **kwargs)
 
-        # Process image thumbnail only when image is uploaded or modified
-        if self.profile_pic and profile_pic_changed:
-            try:
-                with default_storage.open(self.profile_pic.name, 'rb') as f:
-                    img = Image.open(f)
-                    if img.height > 500 or img.width > 500:
-                        output_size = (500, 500)
-                        img.thumbnail(output_size)
-
-                        with default_storage.open(self.profile_pic.name, 'wb') as img_file:
-                            img.save(img_file, format=img.format or 'JPEG', quality=85, optimize=True)
-            except Exception:
-                pass
+    def _shrink_new_profile_pic(self):
+        """Resize a freshly uploaded image in memory so it works with any storage backend."""
+        pic = self.profile_pic
+        if not pic or getattr(pic, '_committed', True):
+            return
+        try:
+            pic.file.seek(0)
+            img = Image.open(pic.file)
+            fmt = img.format or 'JPEG'
+            if img.height > 500 or img.width > 500:
+                img.thumbnail((500, 500))
+                buf = BytesIO()
+                img.save(buf, format=fmt, quality=85, optimize=True)
+                pic.save(pic.name, ContentFile(buf.getvalue()), save=False)
+        except Exception:
+            pass
+        finally:
+            if not getattr(pic, '_committed', True):
+                pic.file.seek(0)
 
     def delete(self, *args, **kwargs):
         if self.is_superuser or self.is_staff:
