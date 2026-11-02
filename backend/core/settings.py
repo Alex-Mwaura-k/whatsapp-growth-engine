@@ -143,6 +143,8 @@ SESSION_COOKIE_SAMESITE = 'Lax'
 
 CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SAMESITE = 'Lax'
+# Share the CSRF cookie with the frontend subdomain (e.g. .example.com) so JS can read it
+CSRF_COOKIE_DOMAIN = os.getenv('CSRF_COOKIE_DOMAIN') or None
 CSRF_TRUSTED_ORIGINS = env_list('CSRF_TRUSTED_ORIGINS', [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
