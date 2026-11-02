@@ -10,13 +10,11 @@ class MpesaClient:
         self.consumer_key = getattr(settings, 'MPESA_CONSUMER_KEY', '')
         self.consumer_secret = getattr(settings, 'MPESA_CONSUMER_SECRET', '')
         self.shortcode = getattr(settings, 'MPESA_SHORTCODE', '174379')
-        # Standard Daraja Sandbox Passkey Fallback
-        self.passkey = getattr(
-            settings, 
-            'MPESA_PASSKEY', 
-            'bfb279f69b5996aa54549371572b73d6382f6654e0193004017e781e93945b99'
-        )
         self.env = getattr(settings, 'MPESA_ENV', 'sandbox')
+        self.passkey = getattr(settings, 'MPESA_PASSKEY', '')
+        if not self.passkey and self.env != 'production':
+            # Public Daraja sandbox passkey, never used for production
+            self.passkey = 'bfb279f69b5996aa54549371572b73d6382f6654e0193004017e781e93945b99'
         # Default mock mode to False so actual Sandbox API calls are attempted
         self.mock_mode = getattr(settings, 'MPESA_MOCK_MODE', False)
 
