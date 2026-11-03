@@ -4,11 +4,21 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: #ffffff;
+}
+
+html.dark {
+  background-color: #0B1120;
+  color-scheme: dark;
 }
 
 body {
   overscroll-behavior-y: none;
-  background-color: #ffffff00;
+  background-color: transparent;
+}
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 ::-webkit-scrollbar {

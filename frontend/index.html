@@ -4,10 +4,18 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/pwa-192x192.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <script>
+      (function () {
+        var dark = localStorage.getItem('themePreference') === 'dark';
+        if (dark) document.documentElement.classList.add('dark');
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', dark ? '#0B1120' : '#FFFFFF');
+      })();
+    </script>
     <title>WhatsApp Growth Engine</title>
     <meta name="description" content="Save for Save made easier. Join opt-in business contact pools, track matching progress, and review checkout details before unlocking a ready batch." />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#FFFFFF" />
     <meta name="robots" content="index, follow" />
     
     <meta property="og:type" content="website" />

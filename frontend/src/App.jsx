@@ -36,7 +36,7 @@ const HomeRoute = () => {
 function App() {
   return (
     <AuthProvider>
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white dark:bg-[#0B1120]">
         <BrowserRouter>
           <ScrollToTop />
           <Analytics />
