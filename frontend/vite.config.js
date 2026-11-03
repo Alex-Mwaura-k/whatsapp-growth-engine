@@ -6,14 +6,17 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
+      strategies: 'injectManifest',
+      srcDir: 'src',
+      filename: 'sw.js',
       registerType: 'autoUpdate',
       injectRegister: 'auto',
       devOptions: {
-        enabled: true 
+        enabled: false
       },
-      workbox: {
+      injectManifest: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
-        sourcemap: false 
+        sourcemap: false
       },
       manifest: {
         name: 'Growth Engine',

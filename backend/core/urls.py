@@ -24,7 +24,10 @@ from matchmaker.views import (
     CurrentMatchView,
     UserBatchesView,
     DownloadVCFView,
-    PoolStatusView
+    PoolStatusView,
+    PushPublicKeyView,
+    PushSubscribeView,
+    PushUnsubscribeView,
 )
 
 urlpatterns = [
@@ -61,6 +64,11 @@ urlpatterns = [
     path('api/queue/my-match/download/', DownloadVCFView.as_view(), name='download_vcf'),
     path('api/pools/my-batches/', UserBatchesView.as_view(), name='my_batches'),
     path('api/pools/download/', DownloadVCFView.as_view(), name='pools_download_vcf'),
+
+    # Web Push
+    path('api/push/public-key/', PushPublicKeyView.as_view(), name='push_public_key'),
+    path('api/push/subscribe/', PushSubscribeView.as_view(), name='push_subscribe'),
+    path('api/push/unsubscribe/', PushUnsubscribeView.as_view(), name='push_unsubscribe'),
 
     # 4. PAYMENTS (M-Pesa Integration)
     path('api/payments/', include('payments.urls')),

@@ -9,6 +9,7 @@ from django.db.models import Q
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 from .models import QueueRequest, MatchBatch, UnlockedContact
+from .push import notify_batch_ready
 from accounts.models import Category, TokenTransaction
 
 User = get_user_model()
@@ -403,6 +404,9 @@ def check_and_form_batches() -> None:
                     member.batch = new_batch
                     member.ready_phase = ready_phase
                     member.save(update_fields=['status', 'batch', 'ready_phase'])
+
+                matched_user_ids = [member.user_id for member in batch_members]
+                transaction.on_commit(lambda ids=matched_user_ids: notify_batch_ready(ids))
 
 
 class MatchingEngine:

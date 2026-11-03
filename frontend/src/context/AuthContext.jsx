@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import api from '../api'; 
+import { removePushSubscription } from '../lib/push';
 import { AuthContext } from './authContextValue';
 
 export const AuthProvider = ({ children }) => {
@@ -41,6 +42,7 @@ export const AuthProvider = ({ children }) => {
   // --- Centralized Logout (Session Based) ---
   const logout = async () => {
     try {
+      await removePushSubscription();
       await api.post('logout/');
     } catch (error) {
       console.error("Logout request failed, clearing local state anyway.", error);

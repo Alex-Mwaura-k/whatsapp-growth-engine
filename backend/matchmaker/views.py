@@ -13,7 +13,8 @@ from rest_framework import generics, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .models import QueueRequest, MatchBatch, UnlockedContact
+from .models import QueueRequest, MatchBatch, UnlockedContact, PushSubscription
+from .push import is_allowed_push_endpoint, push_enabled
 from accounts.models import Category
 
 from .services import (
@@ -411,3 +412,56 @@ class DownloadVCFView(generics.RetrieveAPIView):
         response['Access-Control-Expose-Headers'] = 'X-New-Balance'
 
         return response
+
+MAX_PUSH_SUBSCRIPTIONS_PER_USER = 10
+
+
+class PushPublicKeyView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        if not push_enabled():
+            return Response({'enabled': False}, status=status.HTTP_200_OK)
+        return Response(
+            {'enabled': True, 'public_key': settings.VAPID_PUBLIC_KEY},
+            status=status.HTTP_200_OK,
+        )
+
+
+class PushSubscribeView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, *args, **kwargs):
+        endpoint = request.data.get('endpoint')
+        keys = request.data.get('keys')
+        keys = keys if isinstance(keys, dict) else {}
+        p256dh = keys.get('p256dh')
+        auth = keys.get('auth')
+
+        if not all(isinstance(v, str) and v for v in (endpoint, p256dh, auth)):
+            return Response({'error': 'Invalid subscription.'}, status=status.HTTP_400_BAD_REQUEST)
+        if len(endpoint) > 512 or len(p256dh) > 128 or len(auth) > 64:
+            return Response({'error': 'Invalid subscription.'}, status=status.HTTP_400_BAD_REQUEST)
+        if not is_allowed_push_endpoint(endpoint):
+            return Response({'error': 'Unsupported push service.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        existing_count = PushSubscription.objects.filter(user=request.user).exclude(endpoint=endpoint).count()
+        if existing_count >= MAX_PUSH_SUBSCRIPTIONS_PER_USER:
+            return Response({'error': 'Too many devices.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # A device belongs to whoever is logged in on it now.
+        PushSubscription.objects.update_or_create(
+            endpoint=endpoint,
+            defaults={'user': request.user, 'p256dh': p256dh, 'auth': auth},
+        )
+        return Response({'subscribed': True}, status=status.HTTP_200_OK)
+
+
+class PushUnsubscribeView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, *args, **kwargs):
+        endpoint = request.data.get('endpoint')
+        if isinstance(endpoint, str) and endpoint:
+            PushSubscription.objects.filter(user=request.user, endpoint=endpoint).delete()
+        return Response({'subscribed': False}, status=status.HTTP_200_OK)

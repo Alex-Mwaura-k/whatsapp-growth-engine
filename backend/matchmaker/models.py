@@ -70,6 +70,21 @@ class QueueRequest(models.Model):
         return f"{self.user.whatsapp_name} - {self.type.upper()} - {self.status} (Target: {self.target_size})"
 
 
+class PushSubscription(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='push_subscriptions'
+    )
+    endpoint = models.CharField(max_length=512, unique=True)
+    p256dh = models.CharField(max_length=128)
+    auth = models.CharField(max_length=64)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Push subscription for user {self.user_id}"
+
+
 class HistoryLedger(models.Model):
     user_a = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='matches_sent')
     user_b = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='matches_received')

@@ -201,6 +201,11 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 EMAIL_USE_TLS = env_bool('EMAIL_USE_TLS', True)
 EMAIL_TIMEOUT = int(os.getenv('EMAIL_TIMEOUT', '10'))
 
+# Web Push (generate keys with: python manage.py generate_vapid_keys)
+VAPID_PUBLIC_KEY = os.getenv('VAPID_PUBLIC_KEY', '')
+VAPID_PRIVATE_KEY = os.getenv('VAPID_PRIVATE_KEY', '')
+VAPID_ADMIN_EMAIL = os.getenv('VAPID_ADMIN_EMAIL', 'mailto:admin@whatsappgrowthengine.com')
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

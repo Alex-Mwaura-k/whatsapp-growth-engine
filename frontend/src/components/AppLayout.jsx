@@ -3,6 +3,7 @@ import { Home, Users, UserCircle, LogOut, Download, Sun, Moon } from 'lucide-rea
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/useAuth';
 import { useBatches } from '../hooks/queries';
+import { usePwaNotifications } from '../hooks/usePwaNotifications';
 
 export default function AppLayout() {
   const location = useLocation();
@@ -11,9 +12,11 @@ export default function AppLayout() {
   const { user, logout } = useAuth(); 
   
   const { data: batches = [] } = useBatches({ refetchOnWindowFocus: true });
-  const hasReadyBatch = batches.some(
+  const readyCount = batches.filter(
     (batch) => batch.status === 'matched' && !batch.is_downloaded
-  );
+  ).length;
+  const hasReadyBatch = readyCount > 0;
+  usePwaNotifications(readyCount);
   
   // Use only an in-app choice; device theme preferences do not change the app theme.
   const [isDarkMode, setIsDarkMode] = useState(() => {
