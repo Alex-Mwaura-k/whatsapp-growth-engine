@@ -25,6 +25,7 @@ export default function AppLayout() {
   
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isInstallable, setIsInstallable] = useState(false);
+  const [logoFailed, setLogoFailed] = useState(false);
 
   // Apply and persist the user's explicit in-app theme choice.
   useEffect(() => {
@@ -92,9 +93,23 @@ export default function AppLayout() {
       
       <header className="sticky top-0 bg-white/80 dark:bg-[#0B1120]/80 backdrop-blur-md border-b border-gray-100 dark:border-slate-800 z-[100]">
         <div className="max-w-7xl mx-auto w-full px-3 md:px-8 py-4 flex justify-between items-center">
-          <h1 className="text-xl font-black bg-blue-600 text-white px-2 rounded-[5px] tracking-tight">
-            GE
-          </h1>
+          <Link to="/dashboard" aria-label="WhatsApp Growth Engine home" className="flex min-w-0 items-center gap-2">
+            {logoFailed ? (
+              <span className="shrink-0 rounded-[5px] bg-blue-600 px-2 text-xl font-black tracking-tight text-white">GE</span>
+            ) : (
+              <img
+                src="/logo.png"
+                alt=""
+                width="36"
+                height="36"
+                onError={() => setLogoFailed(true)}
+                className="h-9 w-9 shrink-0 object-contain"
+              />
+            )}
+            <span className="truncate text-sm font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-base">
+              WhatsApp Growth Engine
+            </span>
+          </Link>
           
           <div className="flex items-center gap-3 sm:gap-4">
             
