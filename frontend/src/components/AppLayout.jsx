@@ -2,7 +2,7 @@ import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { Home, Users, UserCircle, LogOut, Download, Sun, Moon } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/useAuth';
-import api from '../api';
+import { useBatches } from '../hooks/queries';
 
 export default function AppLayout() {
   const location = useLocation();
@@ -10,7 +10,10 @@ export default function AppLayout() {
   
   const { user, logout } = useAuth(); 
   
-  const [hasReadyBatch, setHasReadyBatch] = useState(false); 
+  const { data: batches = [] } = useBatches({ refetchOnWindowFocus: true });
+  const hasReadyBatch = batches.some(
+    (batch) => batch.status === 'matched' && !batch.is_downloaded
+  );
   
   // Use only an in-app choice; device theme preferences do not change the app theme.
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -19,32 +22,6 @@ export default function AppLayout() {
   
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isInstallable, setIsInstallable] = useState(false);
-
-  useEffect(() => {
-    let isCurrent = true;
-
-    const checkPendingDownloads = async () => {
-      try {
-        const response = await api.get('pools/my-batches/');
-        if (isCurrent) {
-          const batches = Array.isArray(response.data) ? response.data : [];
-          setHasReadyBatch(batches.some(
-            (batch) => batch.status === 'matched' && !batch.is_downloaded
-          ));
-        }
-      } catch (error) {
-        console.error('Error checking downloads:', error);
-      }
-    };
-
-    checkPendingDownloads();
-    window.addEventListener('downloads:updated', checkPendingDownloads);
-
-    return () => {
-      isCurrent = false;
-      window.removeEventListener('downloads:updated', checkPendingDownloads);
-    };
-  }, [location.pathname]);
 
   // Apply and persist the user's explicit in-app theme choice.
   useEffect(() => {

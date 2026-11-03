@@ -1,13 +1,16 @@
 import React, { useCallback, useState, useEffect } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { ChevronLeft, ChevronRight, Download as DownloadIcon, X } from 'lucide-react';
 import api from '../../api';
 import Toast from '../../components/Toast';
 import VcfBundleRow from './VcfBundleRow';
+import { BundleListSkeleton } from '../../components/Skeleton';
 import { CheckoutModal } from '../../components/CheckoutModal';
+import { useBatches, queryKeys } from '../../hooks/queries';
 
 const Downloads = () => {
-    const [bundles, setBundles] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const queryClient = useQueryClient();
+    const { data: bundles = [], isPending: loading, isError, refetch } = useBatches({ refetchOnMount: 'always' });
     const [downloadingId, setDownloadingId] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
@@ -27,22 +30,9 @@ const Downloads = () => {
     }, []);
     const hideToast = () => setToast(prev => ({ ...prev, show: false }));
 
-    const fetchBundles = useCallback(async () => {
-        setLoading(true);
-        try {
-            const response = await api.get('pools/my-batches/');
-            setBundles(response.data || []);
-        } catch (error) {
-            console.error('Error fetching bundles:', error);
-            showToast('Failed to load contact bundles.', 'error');
-        } finally {
-            setLoading(false);
-        }
-    }, [showToast]);
-
     useEffect(() => {
-        fetchBundles();
-    }, [fetchBundles]);
+        if (isError) showToast('Failed to load contact bundles.', 'error');
+    }, [isError, showToast]);
 
     const handleDownloadClick = (bundle) => {
         if (downloadingId) return;
@@ -79,8 +69,10 @@ const Downloads = () => {
             link.remove();
             window.URL.revokeObjectURL(downloadUrl);
 
-            setBundles(prev => prev.map(b => (b.id === bundle.id || b.batch_id === targetBatchId) ? { ...b, is_downloaded: true, status: 'completed' } : b));
-            window.dispatchEvent(new Event('downloads:updated'));
+            queryClient.setQueryData(queryKeys.batches, (prev = []) =>
+                prev.map(b => (b.id === bundle.id || b.batch_id === targetBatchId) ? { ...b, is_downloaded: true, status: 'completed' } : b)
+            );
+            queryClient.invalidateQueries({ queryKey: queryKeys.batches });
             showToast(`${bundle.name || 'Batch'} downloaded successfully!`, 'success');
         } catch (error) {
             if (error.response && error.response.status === 402) {
@@ -140,9 +132,7 @@ const Downloads = () => {
 
             <div className="w-full h-[550px] flex flex-col p-2 bg-gray-50 dark:bg-slate-800/40 border-2 border-dashed border-gray-200 dark:border-slate-700 rounded-2xl overflow-hidden justify-between transition-colors">
                 {loading ? (
-                    <div className="flex-1 flex justify-center items-center">
-                        <p className="text-gray-500 dark:text-gray-400 animate-pulse font-medium">Loading your contact bundles...</p>
-                    </div>
+                    <BundleListSkeleton rows={itemsPerPage} />
                 ) : bundles.length === 0 ? (
                     <div className="flex-1 flex flex-col items-center justify-center">
                         <div className="text-5xl mb-4">📭</div>
@@ -256,7 +246,7 @@ const Downloads = () => {
                     const targetBundle = checkoutModal.bundle;
                     setCheckoutModal({ show: false, bundle: null, breakdown: null });
                     
-                    await fetchBundles();
+                    await refetch();
                     if (targetBundle) {
                         executeDownload(targetBundle);
                     }

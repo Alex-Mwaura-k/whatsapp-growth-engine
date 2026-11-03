@@ -8,7 +8,11 @@ const ProtectedRoute = ({ children, requireComplete = false }) => {
 
   // 2. If the context is still fetching the user data on initial load
   if (loading) {
-    return <div className="h-screen flex items-center justify-center font-bold text-blue-600">Loading...</div>;
+    return (
+      <div role="status" aria-label="Loading" className="h-screen flex items-center justify-center bg-gray-50 dark:bg-slate-950">
+        <div className="h-3 w-3 animate-pulse rounded-full bg-blue-600" />
+      </div>
+    );
   }
 
   // 3. If there is no user object in the context, they aren't authenticated

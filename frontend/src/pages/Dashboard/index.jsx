@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/useAuth';
 import { Loader2, Zap, Filter, Users } from 'lucide-react';
 import api from '../../api'; 
+import { useQueryClient } from '@tanstack/react-query';
+import { useCategories, queryKeys } from '../../hooks/queries';
 
 import StatsGrid from './StatsGrid';
 import BatchCard from './BatchCard';
@@ -30,7 +32,8 @@ export default function Dashboard() {
 
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [poolToJoin, setPoolToJoin] = useState(null);
-  const [categories, setCategories] = useState([]);
+  const { data: categories = [] } = useCategories();
+  const queryClient = useQueryClient();
   const [searchCategory, setSearchCategory] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(null);
   
@@ -39,19 +42,13 @@ export default function Dashboard() {
   const [selectedAge, setSelectedAge] = useState('');
   const [selectedGender, setSelectedGender] = useState('');
 
-  // 1. FETCH CATEGORIES
+  // A matched pool creates a new downloadable batch, so refresh the cached list.
+  const matchedStatus = pendingPool?.status;
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await api.get('categories/');
-        setCategories(response.data);
-      } catch (error) {
-        console.error("Failed to fetch categories:", error);
-      }
-    };
-
-    fetchCategories();
-  }, []);
+    if (matchedStatus === 'matched') {
+      queryClient.invalidateQueries({ queryKey: queryKeys.batches });
+    }
+  }, [matchedStatus, queryClient]);
 
   // 2. CHECK ACTIVE QUEUE & TRAFFIC LOCK STATUS ON MOUNT OR REFRESH
   useEffect(() => {

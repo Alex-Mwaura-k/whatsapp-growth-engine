@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import api from '../api'; 
 import { AuthContext } from './authContextValue';
 
 export const AuthProvider = ({ children }) => {
+  const queryClient = useQueryClient();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -24,6 +26,7 @@ export const AuthProvider = ({ children }) => {
     try {
       // Removed the leading slash to prevent Axios URL conflicts
       const response = await api.post('login/', { phone_number, password });
+      queryClient.clear();
       
       // Instantly sync the global state with the new user's data
       await refreshUser(); 
@@ -44,6 +47,7 @@ export const AuthProvider = ({ children }) => {
     } finally {
       // CRITICAL: Wipe the user from React's memory to prevent cross-account leaks
       setUser(null);
+      queryClient.clear();
     }
   };
 

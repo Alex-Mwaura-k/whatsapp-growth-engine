@@ -5,7 +5,8 @@ import { X, ZoomIn } from 'lucide-react';
 import imageCompression from 'browser-image-compression';
 import Cropper from 'react-easy-crop';
 import Toast from '../../components/Toast';
-
+import { ProfileSkeleton } from '../../components/Skeleton';
+import { useCategories, usePoolStatus } from '../../hooks/queries';
 import ProfileSidebar from './ProfileSidebar';
 import ProfileView from './ProfileView';
 import ProfileForm from './ProfileForm';
@@ -55,9 +56,8 @@ async function getCroppedImg(imageSrc, pixelCrop) {
 const Profile = () => {
   const { user, refreshUser } = useAuth(); 
 
-  const [categories, setCategories] = useState([]);
-  const [telemetry, setTelemetry] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { data: categories = [] } = useCategories();
+  const { data: telemetry = null } = usePoolStatus(Boolean(user));
   const [saving, setSaving] = useState(false);
   
   const [toast, setToast] = useState(null); 
@@ -77,6 +77,7 @@ const Profile = () => {
   const [copied, setCopied] = useState(false);
 
   const [originalData, setOriginalData] = useState(null);
+  const loading = !originalData;
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
@@ -94,41 +95,26 @@ const Profile = () => {
   useEffect(() => {
     if (!user) return;
 
-    // Fetch categories and pool status directly matching core/urls.py
-    Promise.all([
-      api.get('/categories/'),
-      api.get('/pools/status/').catch((err) => {
-        console.error("Pool status fetch error:", err);
-        return { data: null };
-      })
-    ])
-      .then(([catRes, poolRes]) => {
-        setCategories(catRes.data);
-        if (poolRes?.data) setTelemetry(poolRes.data);
-        
-        const initialData = {
-          first_name: user.first_name || '',
-          last_name: user.last_name || '',
-          email: user.email || '',
-          gender: user.gender || '',
-          age_range: user.age_range || '',
-          location_country: user.location_country || '',
-          location_state_county: user.location_state_county || '',
-          bio: user.bio || '',
-          category: user.category || '',
-          whatsapp_name: user.whatsapp_name || '',
-          profile_pic: user.profile_pic || null,
-          referral_code: user.referral_code || '' 
-        };
+    const initialData = {
+      first_name: user.first_name || '',
+      last_name: user.last_name || '',
+      email: user.email || '',
+      gender: user.gender || '',
+      age_range: user.age_range || '',
+      location_country: user.location_country || '',
+      location_state_county: user.location_state_county || '',
+      bio: user.bio || '',
+      category: user.category || '',
+      whatsapp_name: user.whatsapp_name || '',
+      profile_pic: user.profile_pic || null,
+      referral_code: user.referral_code || '' 
+    };
 
-        setFormData(initialData);
-        setOriginalData({ ...initialData, is_profile_complete: user.is_profile_complete });
+    setFormData(initialData);
+    setOriginalData({ ...initialData, is_profile_complete: user.is_profile_complete });
 
-        if (user.profile_pic) setImagePreview(user.profile_pic);
-        if (!user.is_profile_complete) setIsEditing(true);
-        setLoading(false);
-      })
-      .catch(err => console.error("Error loading profile data", err));
+    if (user.profile_pic) setImagePreview(user.profile_pic);
+    if (!user.is_profile_complete) setIsEditing(true);
   }, [user]);
 
   const handleFileSelect = (e) => {
@@ -297,7 +283,7 @@ const Profile = () => {
     }
   };
 
-  if (loading) return <div className="flex h-[50vh] items-center justify-center font-black text-blue-600 dark:text-blue-400 italic">Syncing Profile...</div>;
+  if (loading) return <ProfileSkeleton />;
 
   return (
     <div className="flex flex-col w-full h-full animate-in fade-in slide-in-from-bottom-2 duration-500">
