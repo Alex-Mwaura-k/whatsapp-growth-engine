@@ -35,9 +35,6 @@ export default function AppLayout() {
       document.documentElement.classList.remove('dark');
       localStorage.setItem('themePreference', 'light');
     }
-    document
-      .querySelector('meta[name="theme-color"]')
-      ?.setAttribute('content', isDarkMode ? '#0B1120' : '#FFFFFF');
   }, [isDarkMode]);
 
   // 3. PWA Install prompt listener

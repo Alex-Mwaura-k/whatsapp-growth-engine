@@ -22,7 +22,7 @@ export default defineConfig({
         name: 'Growth Engine',
         short_name: 'GrowthApp',
         description: 'Expand your WhatsApp network securely.',
-        theme_color: '#ffffff',
+        theme_color: '#000000',
         background_color: '#ffffff',
         display: 'standalone',
         orientation: 'portrait',
