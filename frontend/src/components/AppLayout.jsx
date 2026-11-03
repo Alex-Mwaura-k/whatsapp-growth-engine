@@ -100,10 +100,10 @@ export default function AppLayout() {
               <img
                 src="/logo.png"
                 alt=""
-                width="36"
-                height="36"
+                width="28"
+                height="28"
                 onError={() => setLogoFailed(true)}
-                className="h-9 w-9 shrink-0 object-contain"
+                className="h-7 w-7 shrink-0 object-contain"
               />
             )}
             <span className="truncate text-sm font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-base">
