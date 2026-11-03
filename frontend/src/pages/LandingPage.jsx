@@ -90,9 +90,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen overflow-hidden bg-white font-sans text-slate-900 selection:bg-blue-100 selection:text-blue-950">
       <SEO 
-        title="WhatsApp" 
         description="Grow your WhatsApp network with meaningful connections. Discover and exchange contacts with people who choose to join the same networking pool."
-        url="https://app.whatsappgrowthengine.com"
       />
 
       <a

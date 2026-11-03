@@ -4,6 +4,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import AppLayout from './components/AppLayout';
 import ScrollToTop from './components/ScrollToTop';
 import Analytics from './components/Analytics';
+import RouteSEO from './components/RouteSEO';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Matches from './pages/Matches';
@@ -27,6 +28,7 @@ function App() {
         <BrowserRouter>
           <ScrollToTop />
           <Analytics />
+          <RouteSEO />
           <Routes>
             <Route 
               path="/" 

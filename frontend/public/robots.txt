@@ -1,15 +1,7 @@
 User-agent: *
-Allow: /$
+Allow: /
 
-Disallow: /terms
-Disallow: /privacy
-Disallow: /login
-Disallow: /register
-Disallow: /forgot-password
+# Token URLs must never be crawled. Other private pages use a noindex tag instead.
 Disallow: /reset-password/
-Disallow: /dashboard
-Disallow: /profile
-Disallow: /download
-Disallow: /matches
 
 Sitemap: https://app.whatsappgrowthengine.com/sitemap.xml

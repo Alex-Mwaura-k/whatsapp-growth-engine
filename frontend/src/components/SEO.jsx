@@ -1,15 +1,17 @@
 import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
 
 export default function SEO({ title, description, url, image, noindex = false }) {
-  const baseUrl = import.meta.env.VITE_SITE_URL || 'https://app.whatsappgrowthengine.com';
+  const { pathname } = useLocation();
+  const baseUrl = (import.meta.env.VITE_SITE_URL || 'https://app.whatsappgrowthengine.com').replace(/\/$/, '');
   
-  const siteTitle = title ? `${title} Growth Engine` : 'Growth Engine - Meaningful WhatsApp Connections';
+  const siteTitle = title ? `${title} | Growth Engine` : 'Growth Engine - Meaningful WhatsApp Connections';
   const defaultDesc = 'Save for Save made easier. Connect and exchange WhatsApp Contact details effortlessly for free.';
   const finalDescription = description || defaultDesc;
   
   const defaultImage = `${baseUrl}/pwa-192x192.png`;
   const finalImage = image || defaultImage;
-  const finalUrl = url || baseUrl;
+  const finalUrl = url || (pathname === '/' ? baseUrl : `${baseUrl}${pathname}`);
 
   return (
     <Helmet>
