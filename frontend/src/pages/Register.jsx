@@ -29,12 +29,6 @@ export default function Register() {
   const PhoneInputComponent = PhoneInput.default || PhoneInput;
 
   useEffect(() => {
-    if (localStorage.getItem('access_token')) {
-      navigate('/dashboard');
-    }
-  }, [navigate]);
-
-  useEffect(() => {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 5000);
     let isActive = true;

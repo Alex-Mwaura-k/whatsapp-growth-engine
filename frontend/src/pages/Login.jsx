@@ -5,7 +5,7 @@ import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 
 export default function Login() {
-  const { user, login } = useAuth(); 
+  const { login } = useAuth(); 
 
   const [countryISO, setCountryISO] = useState(''); 
   const [isDetectingCountry, setIsDetectingCountry] = useState(true);
@@ -29,9 +29,6 @@ export default function Login() {
   useEffect(() => {
     if (location.state?.message) {
       setSuccessMsg(location.state.message);
-    }
-    if (user) {
-      navigate('/dashboard');
     }
 
     fetch('https://ipapi.co/json/')
@@ -57,7 +54,7 @@ export default function Login() {
       .finally(() => {
         setIsDetectingCountry(false);
       });
-  }, [navigate, location, user]);
+  }, [navigate, location]);
 
   const handleLogin = async (e) => {
     e.preventDefault();

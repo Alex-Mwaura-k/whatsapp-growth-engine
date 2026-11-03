@@ -4,6 +4,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 import AppLayout from './components/AppLayout';
 import ScrollToTop from './components/ScrollToTop';
 import Analytics from './components/Analytics';
+import AuthLoader from './components/AuthLoader';
+import { useAuth } from './context/useAuth';
 import RouteSEO from './components/RouteSEO';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
@@ -16,9 +18,19 @@ import ResetPassword from './pages/ResetPassword';
 import Downloads from './pages/Downloads';
 import { PrivacyPage, TermsPage } from './pages/LegalPages';
 
+// Sessions use cookies, so the real login state comes from AuthContext, not localStorage.
 const PublicOnlyRoute = ({ children }) => {
-  const token = localStorage.getItem('access_token');
-  return token ? <Navigate to="/dashboard" replace /> : children;
+  const { user, loading } = useAuth();
+  if (loading) return <AuthLoader />;
+  return user ? <Navigate to="/dashboard" replace /> : children;
+};
+
+const HomeRoute = () => {
+  const { user, loading } = useAuth();
+  if (loading) return <AuthLoader />;
+  if (user) return <Navigate to="/dashboard" replace />;
+  if (localStorage.getItem('has_account') === 'true') return <Navigate to="/login" replace />;
+  return <LandingPage />;
 };
 
 function App() {
@@ -30,14 +42,7 @@ function App() {
           <Analytics />
           <RouteSEO />
           <Routes>
-            <Route 
-              path="/" 
-              element={
-                localStorage.getItem('access_token') ? <Navigate to="/dashboard" replace /> : 
-                localStorage.getItem('has_account') === 'true' ? <Navigate to="/login" replace /> : 
-                <LandingPage />
-              } 
-            />
+            <Route path="/" element={<HomeRoute />} />
             <Route path="/login" element={<PublicOnlyRoute><Login /></PublicOnlyRoute>} />
             <Route path="/register" element={<PublicOnlyRoute><Register /></PublicOnlyRoute>} />
             
