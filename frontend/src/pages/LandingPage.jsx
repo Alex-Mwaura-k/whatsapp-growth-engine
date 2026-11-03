@@ -92,7 +92,7 @@ export default function LandingPage() {
       <SEO 
         title="WhatsApp" 
         description="Grow your WhatsApp network with meaningful connections. Discover and exchange contacts with people who choose to join the same networking pool."
-        url="https://whatsapp-growth-engine.onrender.com"
+        url="https://app.whatsappgrowthengine.com"
       />
 
       <a

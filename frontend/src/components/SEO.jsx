@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 
 export default function SEO({ title, description, url, image, noindex = false }) {
-  const baseUrl = import.meta.env.VITE_SITE_URL || 'https://whatsapp-growth-engine.onrender.com';
+  const baseUrl = import.meta.env.VITE_SITE_URL || 'https://app.whatsappgrowthengine.com';
   
   const siteTitle = title ? `${title} Growth Engine` : 'Growth Engine - Meaningful WhatsApp Connections';
   const defaultDesc = 'Save for Save made easier. Connect and exchange WhatsApp Contact details effortlessly for free.';

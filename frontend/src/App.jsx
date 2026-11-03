@@ -3,6 +3,7 @@ import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import AppLayout from './components/AppLayout';
 import ScrollToTop from './components/ScrollToTop';
+import Analytics from './components/Analytics';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Matches from './pages/Matches';
@@ -25,6 +26,7 @@ function App() {
       <div className="min-h-screen bg-white">
         <BrowserRouter>
           <ScrollToTop />
+          <Analytics />
           <Routes>
             <Route 
               path="/" 
