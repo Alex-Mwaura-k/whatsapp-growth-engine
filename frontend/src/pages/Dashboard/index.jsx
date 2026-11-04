@@ -13,6 +13,12 @@ import JoinPoolModal from './JoinPoolModal';
 const GENDER_CHOICES = [{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }, { value: 'O', label: 'Other' }];
 const AGE_CHOICES = ['18-24', '25-29', '30-34', '35-39', '40-44', '45-49', '50-54', '55+'];
 
+// Images live in public/tiers as normal-phase1..4.jpg and filtered-phase1..4.jpg
+const tierImage = (kind, phase) => {
+  const n = Number(/PHASE_(\d)/.exec(phase || '')?.[1]) || 1;
+  return `/tiers/${kind}-phase${Math.min(Math.max(n, 1), 4)}.jpg`;
+};
+
 export default function Dashboard() {
   const { user, loading } = useAuth();
   
@@ -315,7 +321,7 @@ export default function Dashboard() {
                     currentPhase={poolStatus.current_phase}
                     title="Get 20 Contacts" 
                     description="Enter the pool to swap numbers with 20 users in your industry." 
-                    imageUrl="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=800&q=80" 
+                    imageUrl={tierImage('normal', poolStatus.current_phase)} 
                     Icon={Zap} 
                     themeColor="blue" 
                     badgeText="Category Match" 
@@ -332,7 +338,7 @@ export default function Dashboard() {
                     title="Get 100 Contacts" 
                     description="Queue up to exchange contacts with 100 industry members." 
                     infoMessage="Wait times depend on active users." 
-                    imageUrl="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80" 
+                    imageUrl={tierImage('normal', poolStatus.current_phase)} 
                     Icon={Users} 
                     themeColor="indigo" 
                     badgeText={poolStatus.pool_100_unlocked ? "Category Match" : "Traffic Locked"} 
@@ -386,7 +392,7 @@ export default function Dashboard() {
                       currentPhase={poolStatus.current_phase}
                       title="Targeted 20" 
                       description="Queue for 20 precise mutual leads. Filter by gender, country, and age." 
-                      imageUrl="https://images.unsplash.com/photo-1552581234-26160f608093?auto=format&fit=crop&w=800&q=80" 
+                      imageUrl={tierImage('filtered', poolStatus.current_phase)} 
                       Icon={Filter} 
                       themeColor="amber" 
                       badgeText="Highly Targeted" 
@@ -404,7 +410,7 @@ export default function Dashboard() {
                       description="Queue for a massive batch of fully filtered mutual leads." 
                       infoMessage="Because you request exact filters, it may take time." 
                       isBestValue={true} 
-                      imageUrl="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" 
+                      imageUrl={tierImage('filtered', poolStatus.current_phase)} 
                       Icon={Users} 
                       themeColor="orange" 
                       badgeText={poolStatus.pool_100_unlocked ? "Highly Targeted" : "Traffic Locked"} 
