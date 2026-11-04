@@ -106,10 +106,8 @@ export default function LandingPage() {
           aria-label="Main navigation"
         >
           <Link to="/" className="flex min-w-0 shrink items-center gap-2 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600 sm:gap-2.5">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-700 text-sm font-black tracking-tight text-white sm:h-10 sm:w-10" aria-hidden="true">
-              GE
-            </span>
-            <span className="truncate text-sm font-black tracking-tight text-slate-950 sm:text-xl"> WhatsApp Growth Engine</span>
+            <img src="/logo.png" alt="" width="40" height="40" className="h-9 w-9 shrink-0 object-contain sm:h-10 sm:w-10" />
+            <span className="truncate text-xs font-black tracking-tight text-slate-950 sm:text-base">WhatsApp Growth Engine</span>
           </Link>
 
           <div className="hidden items-center gap-7 md:flex">
@@ -126,17 +124,10 @@ export default function LandingPage() {
 
           <div className="flex shrink-0 items-center gap-1 sm:gap-3">
             <Link
-              to="/login"
-              className="inline-flex min-h-10 items-center justify-center rounded-lg px-2 text-xs font-bold text-slate-700 transition-colors hover:bg-slate-50 hover:text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 sm:min-h-11 sm:rounded-xl sm:px-4 sm:text-sm"
-            >
-              Log in
-            </Link>
-            <Link
               to="/register"
               className="inline-flex min-h-10 items-center justify-center gap-1 rounded-lg bg-blue-700 px-2.5 py-2 text-xs font-extrabold text-white shadow-sm transition-colors hover:bg-blue-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 sm:min-h-11 sm:gap-2 sm:rounded-xl sm:px-4 sm:py-2.5 sm:text-sm"
             >
-              <span className="sm:hidden">Join</span>
-              <span className="hidden sm:inline">Get started</span>
+              Get started
               <ArrowRight size={15} aria-hidden="true" />
             </Link>
           </div>
