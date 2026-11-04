@@ -3,6 +3,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from core.dashboard import stats_dashboard
 # Import from accounts app (Auth, Users, Categories)
 from accounts.views import (
     RegisterView, 
@@ -31,6 +32,7 @@ from matchmaker.views import (
 )
 
 urlpatterns = [
+    path('admin/stats/', stats_dashboard, name='admin_stats'),
     path('admin/', admin.site.urls),
     
     # 1. AUTH & ACCOUNT MANAGEMENT

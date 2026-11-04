@@ -1,0 +1,157 @@
+{% extends "admin/base_site.html" %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+  .ge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; margin: 12px 0 24px; }
+  .ge-card { border: 1px solid var(--hairline-color, #ddd); border-radius: 10px; padding: 14px 16px; }
+  .ge-card .v { font-size: 26px; font-weight: 700; line-height: 1.2; }
+  .ge-card .l { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; opacity: .7; margin-top: 4px; }
+  .ge-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+  .ge-panel { border: 1px solid var(--hairline-color, #ddd); border-radius: 10px; padding: 14px 16px; margin-bottom: 20px; }
+  .ge-panel h2 { margin: 0 0 10px; font-size: 15px; background: none; color: inherit; padding: 0; text-transform: none; }
+  .ge-row { display: grid; grid-template-columns: 130px 1fr 90px; gap: 8px; align-items: center; font-size: 13px; margin: 5px 0; }
+  .ge-row .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ge-track { background: var(--hairline-color, #e5e5e5); border-radius: 6px; height: 10px; overflow: hidden; }
+  .ge-fill { background: #2563eb; height: 100%; border-radius: 6px; }
+  .ge-fill.money { background: #16a34a; }
+  .ge-num { text-align: right; font-variant-numeric: tabular-nums; }
+  .ge-note { font-size: 12px; opacity: .7; margin: 4px 0 16px; }
+  .ge-empty { font-size: 13px; opacity: .6; }
+  table.ge-table { width: 100%; }
+</style>
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs"><a href="{% url 'admin:index' %}">Home</a> &rsaquo; Stats</div>
+{% endblock %}
+
+{% block content %}
+{% with s=stats %}
+<p class="ge-note">Aggregated figures only. Superusers are excluded from user counts. Updated {{ s.generated_at|date:"d M Y, H:i" }}. Revenue counts completed M-Pesa payments, including any made with sandbox keys.</p>
+
+<h2>Users</h2>
+<div class="ge-grid">
+  <div class="ge-card"><div class="v">{{ s.users.total }}</div><div class="l">Total users</div></div>
+  <div class="ge-card"><div class="v">{{ s.users.today }}</div><div class="l">Joined today</div></div>
+  <div class="ge-card"><div class="v">{{ s.users.week }}</div><div class="l">Joined last 7 days</div></div>
+  <div class="ge-card"><div class="v">{{ s.users.month }}</div><div class="l">Joined last 30 days</div></div>
+  <div class="ge-card"><div class="v">{{ s.users.logged_in_week }}</div><div class="l">Logged in last 7 days</div></div>
+  <div class="ge-card"><div class="v">{{ s.users.active }}</div><div class="l">Active accounts</div></div>
+  <div class="ge-card"><div class="v">{{ s.users.disabled }}</div><div class="l">Disabled accounts</div></div>
+  <div class="ge-card"><div class="v">{{ s.users.completion_rate }}%</div><div class="l">Profile complete ({{ s.users.profile_complete }})</div></div>
+  <div class="ge-card"><div class="v">{{ s.users.referred }}</div><div class="l">Joined by referral</div></div>
+</div>
+
+<h2>Revenue (KES)</h2>
+<div class="ge-grid">
+  <div class="ge-card"><div class="v">{{ s.revenue.total }}</div><div class="l">Total revenue</div></div>
+  <div class="ge-card"><div class="v">{{ s.revenue.today }}</div><div class="l">Today</div></div>
+  <div class="ge-card"><div class="v">{{ s.revenue.week }}</div><div class="l">Last 7 days</div></div>
+  <div class="ge-card"><div class="v">{{ s.revenue.month }}</div><div class="l">Last 30 days</div></div>
+  <div class="ge-card"><div class="v">{{ s.revenue.paid_count }}</div><div class="l">Successful payments</div></div>
+  <div class="ge-card"><div class="v">{{ s.revenue.average }}</div><div class="l">Average payment</div></div>
+  <div class="ge-card"><div class="v">{{ s.revenue.success_rate }}%</div><div class="l">Payment success rate</div></div>
+  <div class="ge-card"><div class="v">{{ s.revenue.failed }}</div><div class="l">Failed or cancelled</div></div>
+  <div class="ge-card"><div class="v">{{ s.revenue.pending }}</div><div class="l">Pending</div></div>
+</div>
+
+<div class="ge-cols">
+  <div class="ge-panel">
+    <h2>Signups, last 14 days</h2>
+    {% for r in s.users.signups_per_day %}
+    <div class="ge-row"><span class="name">{{ r.label }}</span><div class="ge-track"><div class="ge-fill" style="width: {{ r.width }}%"></div></div><span class="ge-num">{{ r.count }}</span></div>
+    {% endfor %}
+  </div>
+  <div class="ge-panel">
+    <h2>Revenue per day, last 14 days (KES)</h2>
+    {% for r in s.revenue.per_day %}
+    <div class="ge-row"><span class="name">{{ r.label }}</span><div class="ge-track"><div class="ge-fill money" style="width: {{ r.width }}%"></div></div><span class="ge-num">{{ r.count }}</span></div>
+    {% endfor %}
+  </div>
+</div>
+
+<h2>Demographics</h2>
+<div class="ge-cols">
+  <div class="ge-panel">
+    <h2>Age groups</h2>
+    {% for r in s.demographics.age %}
+    <div class="ge-row"><span class="name">{{ r.label }}</span><div class="ge-track"><div class="ge-fill" style="width: {{ r.width }}%"></div></div><span class="ge-num">{{ r.count }} ({{ r.share }}%)</span></div>
+    {% empty %}<p class="ge-empty">No data yet.</p>{% endfor %}
+  </div>
+  <div class="ge-panel">
+    <h2>Gender</h2>
+    {% for r in s.demographics.gender %}
+    <div class="ge-row"><span class="name">{{ r.label }}</span><div class="ge-track"><div class="ge-fill" style="width: {{ r.width }}%"></div></div><span class="ge-num">{{ r.count }} ({{ r.share }}%)</span></div>
+    {% empty %}<p class="ge-empty">No data yet.</p>{% endfor %}
+  </div>
+  <div class="ge-panel">
+    <h2>Countries (top 15)</h2>
+    {% for r in s.demographics.country %}
+    <div class="ge-row"><span class="name" title="{{ r.label }}">{{ r.label }}</span><div class="ge-track"><div class="ge-fill" style="width: {{ r.width }}%"></div></div><span class="ge-num">{{ r.count }} ({{ r.share }}%)</span></div>
+    {% empty %}<p class="ge-empty">No data yet.</p>{% endfor %}
+  </div>
+  <div class="ge-panel">
+    <h2>States / counties (top 15)</h2>
+    {% for r in s.demographics.state %}
+    <div class="ge-row"><span class="name" title="{{ r.label }}">{{ r.label }}</span><div class="ge-track"><div class="ge-fill" style="width: {{ r.width }}%"></div></div><span class="ge-num">{{ r.count }} ({{ r.share }}%)</span></div>
+    {% empty %}<p class="ge-empty">No data yet.</p>{% endfor %}
+  </div>
+  <div class="ge-panel">
+    <h2>Categories (top 15)</h2>
+    {% for r in s.demographics.category %}
+    <div class="ge-row"><span class="name" title="{{ r.label }}">{{ r.label|title }}</span><div class="ge-track"><div class="ge-fill" style="width: {{ r.width }}%"></div></div><span class="ge-num">{{ r.count }} ({{ r.share }}%)</span></div>
+    {% empty %}<p class="ge-empty">No data yet.</p>{% endfor %}
+  </div>
+</div>
+
+<h2>Pools and downloads</h2>
+<div class="ge-grid">
+  <div class="ge-card"><div class="v">{{ s.pools.waiting }}</div><div class="l">Waiting in pools</div></div>
+  <div class="ge-card"><div class="v">{{ s.pools.batches }}</div><div class="l">Batches formed</div></div>
+  <div class="ge-card"><div class="v">{{ s.pools.downloads }}</div><div class="l">Contacts downloaded</div></div>
+</div>
+<div class="ge-cols">
+  <div class="ge-panel">
+    <h2>Pool requests by status</h2>
+    {% for r in s.pools.by_status %}
+    <div class="ge-row"><span class="name">{{ r.label }}</span><div class="ge-track"><div class="ge-fill" style="width: {{ r.width }}%"></div></div><span class="ge-num">{{ r.count }}</span></div>
+    {% empty %}<p class="ge-empty">No data yet.</p>{% endfor %}
+  </div>
+  <div class="ge-panel">
+    <h2>Pool requests by type</h2>
+    {% for r in s.pools.by_type %}
+    <div class="ge-row"><span class="name">{{ r.label }}</span><div class="ge-track"><div class="ge-fill" style="width: {{ r.width }}%"></div></div><span class="ge-num">{{ r.count }}</span></div>
+    {% empty %}<p class="ge-empty">No data yet.</p>{% endfor %}
+  </div>
+</div>
+
+<h2>Tokens and referrals</h2>
+<div class="ge-grid">
+  <div class="ge-card"><div class="v">{{ s.tokens.outstanding }}</div><div class="l">Tokens held by users</div></div>
+  <div class="ge-card"><div class="v">{{ s.revenue.tokens_used_as_discount }}</div><div class="l">Tokens used as discount</div></div>
+</div>
+<div class="ge-cols">
+  <div class="ge-panel">
+    <h2>Token transactions</h2>
+    <table class="ge-table">
+      <thead><tr><th>Type</th><th>Count</th><th>Total</th></tr></thead>
+      <tbody>
+      {% for t in s.tokens.by_type %}<tr><td>{{ t.label }}</td><td>{{ t.count }}</td><td>{{ t.total }}</td></tr>
+      {% empty %}<tr><td colspan="3" class="ge-empty">No data yet.</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="ge-panel">
+    <h2>Top referrers</h2>
+    <table class="ge-table">
+      <thead><tr><th>Name</th><th>Referrals</th></tr></thead>
+      <tbody>
+      {% for name, n in s.tokens.top_referrers %}<tr><td>{{ name }}</td><td>{{ n }}</td></tr>
+      {% empty %}<tr><td colspan="2" class="ge-empty">No referrals yet.</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endwith %}
+{% endblock %}
