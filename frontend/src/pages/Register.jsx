@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import api from '../api';
+import AuthBackground from '../components/AuthBackground';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 
@@ -146,7 +147,8 @@ export default function Register() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen bg-gray-50 px-4 py-8 font-sans relative overflow-hidden">
+    <div className="flex flex-col justify-center items-center min-h-screen px-4 py-8 font-sans relative isolate overflow-hidden">
+      <AuthBackground />
       
       <div 
         className={`fixed top-10 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-500 ease-out ${

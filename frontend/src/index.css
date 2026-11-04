@@ -30,3 +30,11 @@ body {
 *::-webkit-scrollbar {
   display: none;
 }
+@keyframes auth-float {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(30px, 40px, 0) scale(1.1); }
+}
+.auth-blob { animation: auth-float 14s ease-in-out infinite; }
+.auth-blob-slow { animation-duration: 20s; }
+.auth-blob-delay { animation-delay: -6s; }
+@media (prefers-reduced-motion: reduce) { .auth-blob { animation: none; } }

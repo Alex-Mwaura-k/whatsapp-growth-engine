@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
+import AuthBackground from '../components/AuthBackground';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 
@@ -122,7 +123,8 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen bg-gray-50 px-4 py-8 font-sans">
+    <div className="relative isolate flex flex-col justify-center items-center min-h-screen px-4 py-8 font-sans overflow-hidden">
+      <AuthBackground />
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6 border border-gray-100">
         <header className="text-center mb-6">
           <h1 className="text-2xl font-black text-gray-900 tracking-tight">Welcome Back</h1>
