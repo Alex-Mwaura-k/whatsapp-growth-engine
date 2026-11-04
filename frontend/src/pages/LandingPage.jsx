@@ -163,7 +163,7 @@ export default function LandingPage() {
                 Grow your WhatsApp network with <span className="text-blue-700">meaningful connections.</span>
               </motion.h1>
               <motion.p variants={fadeUp} className="mt-6 max-w-xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
-                Growth Engine helps you discover and exchange contacts with people who choose to join the same networking pool. Set up your profile, follow your progress, and decide when a ready batch is right for you.
+                Save for Save made easy, Get Free WhatsApp contacts fast and securely to grow your Status views and expand your network effortlessly.
               </motion.p>
 
               <motion.div variants={fadeUp} className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
