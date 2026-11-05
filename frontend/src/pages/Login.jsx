@@ -123,7 +123,7 @@ export default function Login() {
   };
 
   return (
-    <div className="relative isolate flex flex-col justify-center items-center min-h-screen px-4 py-8 font-sans overflow-hidden">
+    <div className="relative isolate flex flex-col justify-center items-center min-h-dvh px-4 py-4 sm:py-8 font-sans overflow-hidden">
       <AuthBackground />
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6 border border-gray-100">
         <header className="text-center mb-6">

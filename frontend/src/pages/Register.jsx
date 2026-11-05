@@ -147,7 +147,7 @@ export default function Register() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen px-4 py-8 font-sans relative isolate overflow-hidden">
+    <div className="flex flex-col justify-center items-center min-h-dvh px-4 py-4 sm:py-8 font-sans relative isolate overflow-hidden">
       <AuthBackground />
       
       <div 
