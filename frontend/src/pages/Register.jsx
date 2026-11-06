@@ -171,7 +171,7 @@ export default function Register() {
       <div className={`w-full max-w-md bg-white rounded-2xl shadow-xl p-6 border border-gray-100 transition-all duration-500 ${successToast ? 'opacity-50 scale-[0.98] blur-[2px]' : ''}`}>
         <header className="text-center mb-6">
           <h1 className="text-2xl font-black text-gray-900 tracking-tight">Create Account</h1>
-          <p className="text-gray-400 text-[10px] uppercase font-bold tracking-widest mt-1">Join the growth pool</p>
+          <p className="text-gray-400 text-[10px] uppercase font-bold tracking-widest mt-1">Save For Save: Download Free Contacts</p>
         </header>
 
         {error && (
