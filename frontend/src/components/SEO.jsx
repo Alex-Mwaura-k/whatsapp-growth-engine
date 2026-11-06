@@ -5,7 +5,7 @@ export default function SEO({ title, description, url, image, noindex = false })
   const { pathname } = useLocation();
   const baseUrl = (import.meta.env.VITE_SITE_URL || 'https://app.whatsappgrowthengine.com').replace(/\/$/, '');
   
-  const siteTitle = title ? `${title} | Growth Engine` : 'Growth Engine - Meaningful WhatsApp Connections';
+  const siteTitle = title ? `${title} | Growth Engine` : 'Growth Engine - WhatsApp Save for Save Gains';
   const defaultDesc = 'Save for Save made easier. Connect and exchange WhatsApp Contact details effortlessly for free.';
   const finalDescription = description || defaultDesc;
   
