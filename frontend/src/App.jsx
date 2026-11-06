@@ -17,6 +17,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import Downloads from './pages/Downloads';
 import { PrivacyPage, TermsPage } from './pages/LegalPages';
+import Guide from './pages/Guide';
 
 // Sessions use cookies, so the real login state comes from AuthContext, not localStorage.
 const PublicOnlyRoute = ({ children }) => {
@@ -50,6 +51,7 @@ function App() {
             <Route path="/reset-password/:uid/:token" element={<PublicOnlyRoute><ResetPassword /></PublicOnlyRoute>} />
             <Route path="/terms" element={<TermsPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/guide" element={<Guide />} />
             
             <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
               <Route path="/dashboard" element={<Dashboard />} />
