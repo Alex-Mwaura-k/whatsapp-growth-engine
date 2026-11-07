@@ -90,6 +90,8 @@ export default function Guide() {
         </div>
 
         <footer className="mt-10 border-t border-gray-100 pt-5 text-center text-sm text-gray-500 dark:border-slate-800 dark:text-gray-400">
+          <Link to="/join-channel" className="font-bold text-blue-600 hover:underline">Join Channel</Link>
+          {' · '}
           <Link to="/terms" className="font-bold text-blue-600 hover:underline">Terms</Link>
           {' · '}
           <Link to="/privacy" className="font-bold text-blue-600 hover:underline">Privacy</Link>

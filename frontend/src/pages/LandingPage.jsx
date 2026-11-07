@@ -120,6 +120,9 @@ export default function LandingPage() {
             <a href="#faq" className="text-sm font-semibold text-slate-600 transition-colors hover:text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600">
               FAQs
             </a>
+            <Link to="/guide" className="text-sm font-semibold text-slate-600 transition-colors hover:text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600">
+              Guide
+            </Link>
           </div>
 
           <div className="flex shrink-0 items-center gap-1 sm:gap-3">
@@ -369,6 +372,8 @@ export default function LandingPage() {
           <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold">
             <a href="#how-it-works" className="text-slate-600 hover:text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600">How it works</a>
             <a href="#faq" className="text-slate-600 hover:text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600">FAQs</a>
+            <Link to="/guide" className="text-slate-600 hover:text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600">Guide</Link>
+            <Link to="/join-channel" className="text-slate-600 hover:text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600">Join Channel</Link>
             <Link to="/terms" className="text-slate-600 hover:text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600">Terms</Link>
             <Link to="/privacy" className="text-slate-600 hover:text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600">Privacy</Link>
             <a href="mailto:ra.technologies.co.ke@gmail.com" className="text-slate-600 hover:text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600">Contact</a>

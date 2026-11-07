@@ -19,13 +19,16 @@ function LegalPage({ title, children }) {
       />
       <AuthBackground />
       <article className="relative z-10 mx-auto max-w-[1300px] rounded-2xl border border-gray-100 bg-white p-6 shadow-xl dark:border-slate-800 dark:bg-slate-900 sm:p-10">
-        <div className="flex justify-between text-sm font-bold text-blue-600">
+        <div className="flex flex-wrap justify-between gap-x-4 gap-y-2 text-sm font-bold text-blue-600">
           <Link to="/" className="hover:underline">
             Home page
           </Link>
-          <Link to="/register" className="hover:underline">
-            Registration Page
-          </Link>
+          <div className="flex gap-4">
+            <Link to="/guide" className="hover:underline">Guide</Link>
+            <Link to="/register" className="hover:underline">
+              Registration Page
+            </Link>
+          </div>
         </div>
         <header className="mb-8 mt-5 border-b border-gray-100 pb-6 dark:border-slate-800">
           <h1 className="text-3xl font-black text-gray-900 dark:text-white">{title}</h1>
