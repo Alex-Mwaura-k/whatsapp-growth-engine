@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 
-const GUIDE_TITLE = 'What is Save for Save? A Beginner Guide to Growing Your WhatsApp Status';
+const GUIDE_TITLE = 'Whatsapp Save for Save? A Beginner Guide to Growing Your WhatsApp Status for free.';
 const GUIDE_DESCRIPTION =
   'Learn what Save for Save means, how swapping WhatsApp contacts with consenting people can grow your Status audience, and how to stay safe.';
 
