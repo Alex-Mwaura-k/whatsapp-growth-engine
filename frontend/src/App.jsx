@@ -18,6 +18,7 @@ import ResetPassword from './pages/ResetPassword';
 import Downloads from './pages/Downloads';
 import { PrivacyPage, TermsPage } from './pages/LegalPages';
 import Guide from './pages/Guide';
+import JoinChannel from './pages/JoinChannel';
 
 // Sessions use cookies, so the real login state comes from AuthContext, not localStorage.
 const PublicOnlyRoute = ({ children }) => {
@@ -52,6 +53,7 @@ function App() {
             <Route path="/terms" element={<TermsPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/guide" element={<Guide />} />
+            <Route path="/join-channel" element={<JoinChannel />} />
             
             <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
               <Route path="/dashboard" element={<Dashboard />} />
