@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
+import AuthBackground from '../components/AuthBackground';
 
 const effectiveDate = import.meta.env.VITE_EFFECTIVE_DATE;
 const privacyEmail = import.meta.env.VITE_PRIVACY_EMAIL || import.meta.env.VITE_SUPPORT_EMAIL;
@@ -11,12 +12,13 @@ function LegalPage({ title, children }) {
   }, []);
 
   return (
-    <main className="min-h-screen bg-gray-50 px-4 py-4 font-sans dark:bg-slate-950">
+    <main className="relative isolate min-h-screen overflow-hidden px-4 py-4 font-sans">
       <SEO 
         title={title} 
         description={`Read the official ${title} for Growth Engine.`} 
       />
-      <article className="mx-auto max-w-[1300px] rounded-2xl border border-gray-100 bg-white p-6 shadow-xl dark:border-slate-800 dark:bg-slate-900 sm:p-10">
+      <AuthBackground />
+      <article className="relative z-10 mx-auto max-w-[1300px] rounded-2xl border border-gray-100 bg-white p-6 shadow-xl dark:border-slate-800 dark:bg-slate-900 sm:p-10">
         <div className="flex justify-between text-sm font-bold text-blue-600">
           <Link to="/" className="hover:underline">
             Home page

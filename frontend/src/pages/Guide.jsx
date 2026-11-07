@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
+import AuthBackground from '../components/AuthBackground';
 
 const GUIDE_TITLE = 'Whatsapp Save for Save? A Beginner Guide to Growing Your WhatsApp Status for free.';
 const GUIDE_DESCRIPTION =
@@ -12,9 +13,10 @@ export default function Guide() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-gray-50 px-4 py-4 font-sans dark:bg-slate-950">
+    <main className="relative isolate min-h-screen overflow-hidden px-4 py-4 font-sans">
       <SEO title="Save for Save Guide" description={GUIDE_DESCRIPTION} />
-      <article className="mx-auto max-w-3xl rounded-2xl border border-gray-100 bg-white p-6 shadow-xl dark:border-slate-800 dark:bg-slate-900 sm:p-10">
+      <AuthBackground />
+      <article className="relative z-10 mx-auto max-w-[1300px] rounded-2xl border border-gray-100 bg-white p-6 shadow-xl dark:border-slate-800 dark:bg-slate-900 sm:p-10">
         <div className="flex justify-between text-sm font-bold text-blue-600">
           <Link to="/" className="hover:underline">Home page</Link>
           <Link to="/register" className="hover:underline">Get started</Link>
